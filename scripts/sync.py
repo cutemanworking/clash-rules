@@ -20,6 +20,29 @@ SPECIAL_SOURCES = {
     "Broker.yaml": "https://raw.githubusercontent.com/masnmarc/broker-rules/main/rule/Clash/Broker/Broker.yaml"
 }
 
+OVERLAY_DIR = Path(__file__).resolve().parent / "local-overlays"
+
+
+def merge_overlay(content: str, filename: str) -> str:
+    """Append private rules that upstream does not ship. Skips rules already present."""
+    overlay_path = OVERLAY_DIR / filename
+    if not overlay_path.exists():
+        return content
+    existing = {line.strip() for line in content.splitlines() if line.strip().startswith("- ")}
+    kept = []
+    for line in overlay_path.read_text("utf-8").splitlines():
+        stripped = line.strip()
+        if stripped.startswith("- ") and stripped in existing:
+            continue
+        kept.append(line.rstrip())
+    while kept and not kept[0].strip():
+        kept.pop(0)
+    while kept and not kept[-1].strip():
+        kept.pop()
+    if not any(line.strip().startswith("- ") for line in kept):
+        return content
+    return content.rstrip() + "\n\n" + "\n".join(kept) + "\n"
+
 
 def fetch_url(url: str) -> str:
     req = urllib.request.Request(
@@ -46,7 +69,7 @@ def sync_file(file_path: Path, url: str) -> str:
     Syncs a single file. Returns status: 'updated', 'unchanged', or 'failed'.
     """
     try:
-        new_content = fetch_url(url)
+        new_content = merge_overlay(fetch_url(url), file_path.name)
         if not is_valid_rule_file(new_content):
             print(f"[FAIL] {file_path.relative_to(REPO_ROOT)}: Invalid rule content received")
             return "failed"

@@ -215,3 +215,12 @@ payload:
 
   # > Zed
   - DOMAIN-SUFFIX,zed.dev
+
+  # > Muse
+  # Meta personal agent (https://muse.ai/). meta.ai is already under Meta AI.
+  # Hosts taken from the public site bundles and muse.ai / museai.com certificates.
+  - DOMAIN-SUFFIX,muse.ai
+  - DOMAIN-SUFFIX,museai.com
+  - DOMAIN,auth.meta.com
+  - DOMAIN,meta-ohttp-config-prod.fastly-edge.com
+  - DOMAIN,meta-ohttp-relay-prod.fastly-edge.com
