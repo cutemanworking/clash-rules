@@ -273,8 +273,10 @@ DOMAIN-SUFFIX,kiro.dev
 DOMAIN,q.eu-central-1.amazonaws.com
 DOMAIN,q.us-east-1.amazonaws.com
 
-# > Meta AI
+# > Meta AI / Muse
+# https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/
 DOMAIN-SUFFIX,meta.ai
+DOMAIN-SUFFIX,muse.ai
 
 # > Microsoft Copilot
 # Retained for macOS app availability; web/mobile support alone is insufficient
@@ -325,7 +327,6 @@ DOMAIN-SUFFIX,zed.dev
 # > Muse
 # Meta personal agent (https://muse.ai/). meta.ai is already under Meta AI.
 # Hosts taken from the public site bundles and muse.ai / museai.com certificates.
-DOMAIN-SUFFIX,muse.ai
 DOMAIN-SUFFIX,museai.com
 DOMAIN,auth.meta.com
 DOMAIN,meta-ohttp-config-prod.fastly-edge.com
